@@ -1,10 +1,26 @@
-# RelTR: End-to-End Scene Graph Generation with Transformers
+# RelTR: RelTR: Relation Transformer for Scene Graph Generation
 
-We provide the inference code which is entirely implemented in Pytorch in the supplementary. The code of training and evaluation will be released after publication. 
+PyTorch Implementation of the Paper **RelTR: Relation Transformer for Scene Graph Generation**
 
-## Installation
-It is very easy to configure the RelTR environment. We strongly recommend running the code on Linux system. Python=3.6, pytorch=1.6 and matplotlib are used in our code.
-Please configure the environment as follows:
+Different from most existing advanced approaches that infer the **dense** relationships between all entity proposals, our one-stage method can directly generate a **sparse** scene graph by decoding the visual appearance.
+
+<p align="center">
+  <img src="demo/demo.png">
+</p>
+
+# Checklist
+
+- [x] Inference Code :tada:
+- [ ] Training Code for Visual Genome :clock9:
+- [ ] Evaluation Code for Visual Genome :clock9:
+- [ ] Training Code for OpenImages V6 :clock9:
+- [ ] Evaluation Code for OpenImages V6 :clock9:
+
+# Installation
+:smile: It is super easy to configure the RelTR environment.
+
+Only python=3.6, PyTorch=1.6 and matplotlib are required to infer an image!
+You can configure the environment as follows:
 ```
 # create a conda environment 
 conda create -n reltr python=3.6
@@ -14,22 +30,20 @@ conda activate reltr
 conda install pytorch==1.6.0 torchvision==0.7.0 cudatoolkit=10.1 -c pytorch
 conda install matplotlib
 ```
-# Pretrained Model
-Please download the anonymous version of the pretrained RelTR model on the Visual Genome dataset with the link:
-https://drive.google.com/file/d/1id6oD_iwiNDD6HyCn2ORgRTIKkPD3tUD/view
 
-and put it under 
+# Usage
+
+## Inference
+1. Download our [RelTR model](https://drive.google.com/file/d/1id6oD_iwiNDD6HyCn2ORgRTIKkPD3tUD/view) pretrained on the Visual Genome dataset and put it under 
 ```
-models/checkpoint0149.pth
+ckpt/checkpoint0149.pth
 ```
-## Usage
-You can infer an image with the command:
+2. Infer the relationships in an image with the command:
 ```
-python inference.py --img_path $IMAGE_PATH
+python inference.py --img_path $IMAGE_PATH --resume $MODEL_PATH
 ```
-We provide 5 images from VG dataset and 1 image from internet (Please use it only for testing, we do not own the copyright). You can infer the first VG image with:
-```
-python inference.py --img_path images/vg1.jpg
-```
-The result is as follows. The 1st/2nd row is the subject/object attention heat map while the 3rd row shows predicted triplets. Only top-10 confident predictions (and scores of subject, object and predicate>0.3) are shown. For clear demonstration, the attention heatmaps are not overlapped on the predictions as we did in the paper.
-![GitHub Logo](vg1_pred.png)
+We attached 5 images from **VG** dataset and 1 image from **internet**. You can also test with your customized image. The result should look like:
+<p align="center">
+  <img src="demo/vg1_pred.png">
+</p>
+
