@@ -1,6 +1,8 @@
+# Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
+# Copyright (c) Institute of Information Processing, Leibniz University Hannover.
+import argparse
 from PIL import Image
 import matplotlib.pyplot as plt
-import argparse
 
 import torch
 import torchvision.transforms as T
@@ -9,22 +11,12 @@ from models import build_model
 
 def get_args_parser():
     parser = argparse.ArgumentParser('Set transformer detector', add_help=False)
-    parser.add_argument('--lr', default=1e-4, type=float)
     parser.add_argument('--lr_backbone', default=1e-5, type=float)
-    parser.add_argument('--batch_size', default=1, type=int)
-    parser.add_argument('--weight_decay', default=1e-4, type=float)
-    parser.add_argument('--epochs', default=150, type=int)
-    parser.add_argument('--lr_drop', default=100, type=int)
-    parser.add_argument('--clip_max_norm', default=0.1, type=float,
-                        help='gradient clipping max norm')
 
     # image path
-    parser.add_argument('--img_path', type=str, default='images/vg1.jpg',
+    parser.add_argument('--img_path', type=str, default='demo/vg1.jpg',
                         help="Path of the test image")
 
-    # Model parameters
-    parser.add_argument('--frozen_weights', type=str, default=None,
-                        help="Path to the pretrained model. If set, only the mask head will be trained")
     # * Backbone
     parser.add_argument('--backbone', default='resnet50', type=str,
                         help="Name of the convolutional backbone to use")
@@ -56,22 +48,11 @@ def get_args_parser():
     parser.add_argument('--no_aux_loss', dest='aux_loss', action='store_false',
                         help="Disables auxiliary decoding losses (loss at each layer)")
 
-    parser.add_argument('--output_dir', default='',
-                        help='path where to save, empty for no saving')
     parser.add_argument('--device', default='cuda',
                         help='device to use for training / testing')
-    parser.add_argument('--seed', default=42, type=int)
-    parser.add_argument('--resume', default='', help='resume from checkpoint')
-    parser.add_argument('--start_epoch', default=0, type=int, metavar='N',
-                        help='start epoch')
-    parser.add_argument('--eval', action='store_true')
-    parser.add_argument('--num_workers', default=2, type=int)
+    parser.add_argument('--resume', default='ckpt/checkpoint0149.pth', help='resume from checkpoint')
 
     # distributed training parameters
-    parser.add_argument('--world_size', default=1, type=int,
-                        help='number of distributed processes')
-    parser.add_argument('--relations', default=1, type=int,
-                        help="train relationship detection")
     parser.add_argument('--return_interm_layers', action='store_true',
                         help="Return the fpn if there is the tag")
     return parser
@@ -121,8 +102,7 @@ def main(args):
                 'to', 'under', 'using', 'walking in', 'walking on', 'watching', 'wearing', 'wears', 'with']
 
     model = build_model(args)
-    load_path = 'models/checkpoint0149.pth'
-    ckpt = torch.load(load_path)
+    ckpt = torch.load(args.resume)
     model.load_state_dict(ckpt['model'])
     model.eval()
 
@@ -139,16 +119,15 @@ def main(args):
     probas = outputs['rel_logits'].softmax(-1)[0, :, :-1]
     probas_sub = outputs['sub_logits'].softmax(-1)[0, :, :-1]
     probas_obj = outputs['obj_logits'].softmax(-1)[0, :, :-1]
-    keep = torch.logical_and(probas.max(-1).values > 0.3, torch.logical_and(probas_sub.max(-1).values > 0.2,
-                                                                            probas_obj.max(-1).values > 0.2))
+    keep = torch.logical_and(probas.max(-1).values > 0.3, torch.logical_and(probas_sub.max(-1).values > 0.3,
+                                                                            probas_obj.max(-1).values > 0.3))
 
     # convert boxes from [0; 1] to image scales
     sub_bboxes_scaled = rescale_bboxes(outputs['sub_boxes'][0, keep], im.size)
     obj_bboxes_scaled = rescale_bboxes(outputs['obj_boxes'][0, keep], im.size)
 
     topk = 10
-    keep_queries = keep.nonzero().squeeze()
-    score = probas[keep_queries].max(-1)[0]* probas_sub[keep_queries].max(-1)[0]* probas_obj[keep_queries].max(-1)[0]
+    keep_queries = torch.nonzero(keep, as_tuple=True)[0]
     indices = torch.argsort(-probas[keep_queries].max(-1)[0] * probas_sub[keep_queries].max(-1)[0] * probas_obj[keep_queries].max(-1)[0])[:topk]
     keep_queries = keep_queries[indices]
 
@@ -180,6 +159,7 @@ def main(args):
 
         # get the feature map shape
         h, w = conv_features['0'].tensors.shape[-2:]
+        im_w, im_h = im.size
 
         fig, axs = plt.subplots(ncols=len(indices), nrows=3, figsize=(22, 7))
         for idx, ax_i, (sxmin, symin, sxmax, symax), (oxmin, oymin, oxmax, oymax) in \
@@ -199,9 +179,8 @@ def main(args):
                                        fill=False, color='orange', linewidth=2.5))
 
             ax.axis('off')
-            ax.set_title(CLASSES[probas_sub[idx].argmax()]+'{:.2f}'.format(probas_sub[idx].max().item())
-                         +'-'+REL_CLASSES[probas[idx].argmax()]+'{:.2f}'.format(probas[idx].max().item())+'-'
-                         +CLASSES[probas_obj[idx].argmax()]+'{:.2f}'.format(probas_obj[idx].max().item()), fontsize=10)
+            ax.set_title(CLASSES[probas_sub[idx].argmax()]+' '+REL_CLASSES[probas[idx].argmax()]+' '+CLASSES[probas_obj[idx].argmax()], fontsize=10)
+
         fig.tight_layout()
         plt.show()
 

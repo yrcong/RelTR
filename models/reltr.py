@@ -1,7 +1,5 @@
-"""
-CVPR2022 Submission, Paper ID: 352
-RelTR: End-to-End Scene Graph Generation with Transformers
-"""
+# Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
+# Copyright (c) Institute of Information Processing, Leibniz University Hannover.
 
 import torch
 import torch.nn.functional as F
@@ -13,7 +11,7 @@ from .backbone import build_backbone
 from .transformer import build_transformer
 
 class RelTR(nn.Module):
-    """ RelTR: End-to-End Scene Graph Generation with Transformers """
+    """ RelTR: Relation Transformer for Scene Graph Generation """
     def __init__(self, backbone, transformer, num_classes, num_entities, num_triplets, aux_loss=False, matcher=None):
         """ Initializes the model.
         Parameters:
