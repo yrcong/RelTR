@@ -1,4 +1,4 @@
-# RelTR: RelTR: Relation Transformer for Scene Graph Generation
+# RelTR: Relation Transformer for Scene Graph Generation
 
 PyTorch Implementation of the Paper **RelTR: Relation Transformer for Scene Graph Generation**
 
