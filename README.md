@@ -1,6 +1,6 @@
 # RelTR: Relation Transformer for Scene Graph Generation
 
-PyTorch Implementation of the Paper **RelTR: Relation Transformer for Scene Graph Generation**
+PyTorch Implementation of the Paper [**RelTR: Relation Transformer for Scene Graph Generation**](https://arxiv.org/abs/2201.11460)
 
 Different from most existing advanced approaches that infer the **dense** relationships between all entity proposals, our one-stage method can directly generate a **sparse** scene graph by decoding the visual appearance.
 
