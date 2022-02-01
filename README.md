@@ -8,7 +8,7 @@ Different from most existing advanced approaches that infer the **dense** relati
   <img src="demo/demo.png">
 </p>
 
-# Checklist
+# 0. Checklist
 
 - [x] Inference Code :tada:
 - [ ] Training Code for Visual Genome :clock9:
@@ -16,10 +16,17 @@ Different from most existing advanced approaches that infer the **dense** relati
 - [ ] Training Code for OpenImages V6 :clock9:
 - [ ] Evaluation Code for OpenImages V6 :clock9:
 
-# Installation
+# 1. Installation
+Download **RelTR** with:
+```
+git clone https://github.com/yrcong/RelTR.git
+cd RelTR
+```
+
+## For Inference
 :smile: It is super easy to configure the RelTR environment.
 
-Only python=3.6, PyTorch=1.6 and matplotlib are required to infer an image!
+If you want to **infer an image**, only python=3.6, PyTorch=1.6 and matplotlib are required!
 You can configure the environment as follows:
 ```
 # create a conda environment 
@@ -31,14 +38,44 @@ conda install pytorch==1.6.0 torchvision==0.7.0 cudatoolkit=10.1 -c pytorch
 conda install matplotlib
 ```
 
-# Usage
+## Training/Evaluation on Visual Genome
+If you want to **train/evaluate** RelTR on Visual Genome, you need a little more preparation:
+
+a) Download the annotations of [Visual Genome (in COCO-format)](https://drive.google.com/file/d/1aGwEu392DiECGdvwaYr-LgqGLmWhn8yD/view?usp=sharing) and unzip it in the ```data/``` forder.
+
+b) Download the the images of VG [Part1](https://cs.stanford.edu/people/rak248/VG_100K_2/images.zip) and [Part2](https://cs.stanford.edu/people/rak248/VG_100K_2/images2.zip). Unzip and place all images in a folder ```data/vg/images/```
+
+c) Some widely-used evaluation code (**IoU**) need to be compiled... We will replace it with Pytorch code.
+```
+# compile the code computing box intersection
+cd lib/fpn
+sh make.sh
+```
+
+The directory structure looks like:
+```
+RelTR
+| 
+│
+└───data
+│   └───vg
+│       │   rel.json
+│       │   test.json
+│       |   train.json
+|       |   val.json
+|       |   images
+└───datasets    
+... 
+```
+
+# 2. Usage
 
 ## Inference
-1. Download our [RelTR model](https://drive.google.com/file/d/1id6oD_iwiNDD6HyCn2ORgRTIKkPD3tUD/view) pretrained on the Visual Genome dataset and put it under 
+a) Download our [RelTR model](https://drive.google.com/file/d/1id6oD_iwiNDD6HyCn2ORgRTIKkPD3tUD/view) pretrained on the Visual Genome dataset and put it under 
 ```
 ckpt/checkpoint0149.pth
 ```
-2. Infer the relationships in an image with the command:
+b) Infer the relationships in an image with the command:
 ```
 python inference.py --img_path $IMAGE_PATH --resume $MODEL_PATH
 ```
@@ -47,3 +84,14 @@ We attached 5 images from **VG** dataset and 1 image from **internet**. You can 
   <img src="demo/vg1_pred.png">
 </p>
 
+## Training
+a) Train RelTR on Visual Genome on a single node with 8 GPUs (2 images per GPU):
+```
+python -m torch.distributed.launch --nproc_per_node=8 --use_env main.py --dataset vg --img_folder data/vg/images/ --batch_size 2 --output_dir ckpt
+```
+
+## Evaluation
+b) Evaluate the pretrained RelTR on Visual Genome with a single GPU (1 image per GPU):
+```
+python main.py --dataset vg --img_folder data/vg/images/ --eval --batch_size 1 --resume ckpt/checkpoint0149.pth
+```
