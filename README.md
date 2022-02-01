@@ -11,8 +11,8 @@ Different from most existing advanced approaches that infer the **dense** relati
 # 0. Checklist
 
 - [x] Inference Code :tada:
-- [ ] Training Code for Visual Genome :clock9:
-- [ ] Evaluation Code for Visual Genome :clock9:
+- [x] Training Code for Visual Genome :tada:
+- [x] Evaluation Code for Visual Genome :tada:
 - [ ] Training Code for OpenImages V6 :clock9:
 - [ ] Evaluation Code for OpenImages V6 :clock9:
 
