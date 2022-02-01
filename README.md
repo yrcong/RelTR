@@ -40,6 +40,7 @@ conda install matplotlib
 
 ## Training/Evaluation on Visual Genome
 If you want to **train/evaluate** RelTR on Visual Genome, you need a little more preparation:
+
 a) Scipy (we used 1.5.2) is required. 
 ```
 conda install scipy
