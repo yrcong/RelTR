@@ -17,7 +17,7 @@ Different from most existing advanced approaches that infer the **dense** relati
 - [ ] Evaluation Code for OpenImages V6 :clock9:
 
 # 1. Installation
-Download **RelTR** with:
+Download **RelTR Repo** with:
 ```
 git clone https://github.com/yrcong/RelTR.git
 cd RelTR
