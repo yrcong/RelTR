@@ -189,6 +189,7 @@ class TransformerDecoder(nn.Module):
 
 
 class TransformerDecoderLayer(nn.Module):
+    """triplet decoder layer"""
     def __init__(self, d_model, nhead, dim_feedforward=2048, dropout=0.1, activation="relu"):
         super().__init__()
         self.activation = _get_activation_fn(activation)
