@@ -41,9 +41,10 @@ conda install matplotlib
 ## Training/Evaluation on Visual Genome
 If you want to **train/evaluate** RelTR on Visual Genome, you need a little more preparation:
 
-a) Scipy (we used 1.5.2) is required. 
+a) Scipy (we used 1.5.2) and pycocotools are required. 
 ```
 conda install scipy
+pip install -U 'git+https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI'
 ```
 
 b) Download the annotations of [Visual Genome (in COCO-format)](https://drive.google.com/file/d/1aGwEu392DiECGdvwaYr-LgqGLmWhn8yD/view?usp=sharing) and unzip it in the ```data/``` forder.
