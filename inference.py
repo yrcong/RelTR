@@ -12,6 +12,7 @@ from models import build_model
 def get_args_parser():
     parser = argparse.ArgumentParser('Set transformer detector', add_help=False)
     parser.add_argument('--lr_backbone', default=1e-5, type=float)
+    parser.add_argument('--dataset', default='vg')
 
     # image path
     parser.add_argument('--img_path', type=str, default='demo/vg1.jpg',
@@ -51,6 +52,20 @@ def get_args_parser():
     parser.add_argument('--device', default='cuda',
                         help='device to use for training / testing')
     parser.add_argument('--resume', default='ckpt/checkpoint0149.pth', help='resume from checkpoint')
+    parser.add_argument('--set_cost_class', default=1, type=float,
+                        help="Class coefficient in the matching cost")
+    parser.add_argument('--set_cost_bbox', default=5, type=float,
+                        help="L1 box coefficient in the matching cost")
+    parser.add_argument('--set_cost_giou', default=2, type=float,
+                        help="giou box coefficient in the matching cost")
+    parser.add_argument('--set_iou_threshold', default=0.7, type=float,
+                        help="giou box coefficient in the matching cost")
+    parser.add_argument('--bbox_loss_coef', default=5, type=float)
+    parser.add_argument('--giou_loss_coef', default=2, type=float)
+    parser.add_argument('--rel_loss_coef', default=1, type=float)
+    parser.add_argument('--eos_coef', default=0.1, type=float,
+                        help="Relative classification weight of the no-object class")
+
 
     # distributed training parameters
     parser.add_argument('--return_interm_layers', action='store_true',
@@ -101,7 +116,7 @@ def main(args):
                 'painted on', 'parked on', 'part of', 'playing', 'riding', 'says', 'sitting on', 'standing on',
                 'to', 'under', 'using', 'walking in', 'walking on', 'watching', 'wearing', 'wears', 'with']
 
-    model = build_model(args)
+    model, _, _ = build_model(args)
     ckpt = torch.load(args.resume)
     model.load_state_dict(ckpt['model'])
     model.eval()
