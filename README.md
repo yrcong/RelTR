@@ -1,4 +1,7 @@
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1-U642OoCyb8OSM8nx9lme49dmWa_aUcU?usp=sharing)
 # RelTR: Relation Transformer for Scene Graph Generation
+
+We now provide [Colab](https://colab.research.google.com/drive/1-U642OoCyb8OSM8nx9lme49dmWa_aUcU?usp=sharing) Demo! 
 
 PyTorch Implementation of the Paper [**RelTR: Relation Transformer for Scene Graph Generation**](https://arxiv.org/abs/2201.11460)
 
@@ -13,6 +16,7 @@ Different from most existing advanced approaches that infer the **dense** relati
 - [x] Inference Code :tada:
 - [x] Training Code for Visual Genome :tada:
 - [x] Evaluation Code for Visual Genome :tada:
+- [x] Colab Demo :tada:
 - [ ] Training Code for OpenImages V6 :clock9:
 - [ ] Evaluation Code for OpenImages V6 :clock9:
 
