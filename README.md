@@ -1,3 +1,5 @@
+:tada: Good News: our work has been accepted by **IEEE Transactions on Pattern Analysis and Machine Intelligence (PAMI)!** :tada:
+
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1-U642OoCyb8OSM8nx9lme49dmWa_aUcU?usp=sharing)
 # RelTR: Relation Transformer for Scene Graph Generation
 
