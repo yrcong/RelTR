@@ -1,3 +1,0 @@
---dataset oi --img_folder /data/scene_understanding/OpenImagesV6/test/ --ann_path data/oi/ --batch_size 1 --output_dir ckpt --eval --resume ckpt/checkpoint0149_oi.pth
-
---dataset vg --img_folder /home/cong/Dokumente/tmp/data/visualgenome/images/ --ann_path data/vg/ --batch_size 1 --output_dir ckpt --eval --resume ckpt/checkpoint0149.pth
