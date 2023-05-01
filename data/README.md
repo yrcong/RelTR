@@ -10,3 +10,5 @@ a) Download the original annotation of Open Images V6 (oidv6/v4-train/test/valid
 b) Download the OIv6 images provided by [Rongjie Li](https://github.com/SHTUPLUS/PySGG/blob/main/DATASET.md) and unzip it.
 
 c) Change the paths in process.py. The images will be renamed (since the COCO tool only supports numeric image names) and the COCO-like annotations will be produced. You can directly download the annotations with [the link](https://drive.google.com/file/d/1kWeG3O071Bx17KI7oLbMdgGvE5xmyY8k/view?usp=share_link).
+
+d) Put the renamed images in the ```data/oi/images/``` and the annotations in ```data/oi/```.
