@@ -19,8 +19,11 @@ Different from most existing advanced approaches that infer the **dense** relati
 - [x] Training Code for Visual Genome :tada:
 - [x] Evaluation Code for Visual Genome :tada:
 - [x] Colab Demo :tada:
-- [ ] Training Code for OpenImages V6 :clock9:
-- [ ] Evaluation Code for OpenImages V6 :clock9:
+- [x] Training Code for OpenImages V6 :tada:
+- [x] Evaluation Code for OpenImages V6 :tada:
+- [ ] Cleaner Evaluation Code :clock9:
+- [ ] Post Processing :clock9:
+
 
 # 1. Installation
 Download **RelTR Repo** with:
