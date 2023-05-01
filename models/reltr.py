@@ -157,6 +157,7 @@ class SetCriterion(nn.Module):
         empty_weight[-1] = self.eos_coef
         self.register_buffer('empty_weight', empty_weight)
 
+        self.num_rel_classes = 51 if num_classes == 151 else 31 # Using entity class numbers to adapt rel class numbers
         empty_weight_rel = torch.ones(num_rel_classes+1)
         empty_weight_rel[-1] = self.eos_coef
         self.register_buffer('empty_weight_rel', empty_weight_rel)
@@ -252,7 +253,7 @@ class SetCriterion(nn.Module):
         src_logits = outputs['rel_logits']
         idx = self._get_src_permutation_idx(indices[1])
         target_classes_o = torch.cat([t["rel_annotations"][J,2] for t, (_, J) in zip(targets, indices[1])])
-        target_classes = torch.full(src_logits.shape[:2], 51, dtype=torch.int64, device=src_logits.device)
+        target_classes = torch.full(src_logits.shape[:2], self.num_rel_classes, dtype=torch.int64, device=src_logits.device)
         target_classes[idx] = target_classes_o
 
         loss_ce = F.cross_entropy(src_logits.transpose(1, 2), target_classes, self.empty_weight_rel)
@@ -374,8 +375,8 @@ class MLP(nn.Module):
 
 def build(args):
 
-    num_classes = 151 if args.dataset != 'oi' else None #TODO: openimage v6
-    num_rel_classes = 51 if args.dataset != 'oi' else None #TODO: openimage v6
+    num_classes = 151 if args.dataset != 'oi' else 289 # some entity categories in OIV6 are deactivated.
+    num_rel_classes = 51 if args.dataset != 'oi' else 31
 
     device = torch.device(args.device)
 

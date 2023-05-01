@@ -169,7 +169,6 @@ def build(image_set, args):
     ann_path = args.ann_path
     img_folder = args.img_folder
 
-    #TODO: adapt vg as coco
     if image_set == 'train':
         ann_file = ann_path + 'train.json'
     elif image_set == 'val':
