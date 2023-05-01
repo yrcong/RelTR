@@ -5,7 +5,7 @@ b) Download the annotations of [VG (in COCO-format)](https://drive.google.com/fi
 
 
 # For Open Images V6:
-a) Download the original annotation of Open Images V6 (oidv6/v4-train/test/validation-annotations-vrd.csv) from the offical [website](https://storage.googleapis.com/openimage/web/download.html).
+a) Download the original annotation of Open Images V6 (oidv6/v4-train/test/validation-annotations-vrd.csv) from the offical [website]([https://storage.googleapis.com/openimage/web/download.html](https://storage.googleapis.com/openimages/web/download.html)).
 
 a) Download the annotations of [Open Images V6 (in COCO-format)](https://drive.google.com/file/d/1kWeG3O071Bx17KI7oLbMdgGvE5xmyY8k/view?usp=share_link) and unzip it in the ```data/``` forder.
 
