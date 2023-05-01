@@ -44,7 +44,7 @@ conda install pytorch==1.6.0 torchvision==0.7.0 cudatoolkit=10.1 -c pytorch
 conda install matplotlib
 ```
 
-## Training/Evaluation on Visual Genome
+## Training/Evaluation on Visual Genome or Open Images V6
 If you want to **train/evaluate** RelTR on Visual Genome, you need a little more preparation:
 
 a) Scipy (we used 1.5.2) and pycocotools are required. 
@@ -52,12 +52,9 @@ a) Scipy (we used 1.5.2) and pycocotools are required.
 conda install scipy
 pip install -U 'git+https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI'
 ```
+b) Follow [README](https://github.com/yrcong/RelTR/blob/main/data/README.md) in the data directory to prepare the datasets.
 
-b) Download the annotations of [Visual Genome (in COCO-format)](https://drive.google.com/file/d/1aGwEu392DiECGdvwaYr-LgqGLmWhn8yD/view?usp=sharing) and unzip it in the ```data/``` forder.
-
-c) Download the the images of VG [Part1](https://cs.stanford.edu/people/rak248/VG_100K_2/images.zip) and [Part2](https://cs.stanford.edu/people/rak248/VG_100K_2/images2.zip). Unzip and place all images in a folder ```data/vg/images/```
-
-d) Some widely-used evaluation code (**IoU**) need to be compiled... We will replace it with Pytorch code.
+c) Some widely-used evaluation code (**IoU**) need to be compiled... We will replace it with Pytorch code.
 ```
 # compile the code computing box intersection
 cd lib/fpn
