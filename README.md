@@ -7,7 +7,16 @@ We now provide [[Colab](https://colab.research.google.com/drive/1-U642OoCyb8OSM8
 
 PyTorch Implementation of the Paper [**RelTR: Relation Transformer for Scene Graph Generation**](https://arxiv.org/abs/2201.11460v3)
 
-Different from most existing advanced approaches that infer the **dense** relationships between all entity proposals, our one-stage method can directly generate a **sparse** scene graph by decoding the visual appearance.
+Different from most existing advanced approaches that infer the **dense** relationships between all entity proposals, our one-stage method can directly generate a **sparse** scene graph by decoding the visual appearance. If our work is helpful for your research, please cite our publication:
+```
+@article{cong2023reltr,
+  title={Reltr: Relation transformer for scene graph generation},
+  author={Cong, Yuren and Yang, Michael Ying and Rosenhahn, Bodo},
+  journal={IEEE Transactions on Pattern Analysis and Machine Intelligence},
+  year={2023},
+  publisher={IEEE}
+}
+```
 
 <p align="center">
   <img src="demo/demo.png">
