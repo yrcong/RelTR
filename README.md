@@ -76,6 +76,12 @@ RelTR
 │       |   train.json
 |       |   val.json
 |       |   images
+│   └───oi
+│       │   rel.json
+│       │   test.json
+│       |   train.json
+|       |   val.json
+|       |   images
 └───datasets    
 ... 
 ```
@@ -99,11 +105,20 @@ We attached 5 images from **VG** dataset and 1 image from **internet**. You can 
 ## Training
 a) Train RelTR on Visual Genome on a single node with 8 GPUs (2 images per GPU):
 ```
-python -m torch.distributed.launch --nproc_per_node=8 --use_env main.py --dataset vg --img_folder data/vg/images/ --batch_size 2 --output_dir ckpt
+python -m torch.distributed.launch --nproc_per_node=8 --use_env main.py --dataset vg --img_folder data/vg/images/ --ann_path data/vg/ --batch_size 2 --output_dir ckpt
+```
+b) Train RelTR on Open Images V6 on a single node with 8 GPUs (2 images per GPU):
+```
+python -m torch.distributed.launch --nproc_per_node=8 --use_env main.py --dataset oi --img_folder data/oi/images/ --ann_path data/oi/ --batch_size 2 --output_dir ckpt
 ```
 
 ## Evaluation
-b) Evaluate the pretrained RelTR on Visual Genome with a single GPU (1 image per GPU):
+a) Evaluate the pretrained [RelTR](https://drive.google.com/file/d/1id6oD_iwiNDD6HyCn2ORgRTIKkPD3tUD/view) on Visual Genome with a single GPU (1 image per GPU):
 ```
-python main.py --dataset vg --img_folder data/vg/images/ --eval --batch_size 1 --resume ckpt/checkpoint0149.pth
+python main.py --dataset vg --img_folder data/vg/images/ --ann_path data/vg/ --eval --batch_size 1 --resume ckpt/checkpoint0149.pth
+```
+
+b) Evaluate the pretrained [RelTR](https://drive.google.com/file/d/1pcoUnR0XWsvM9lJZ5f93N5TKHkLdjtnb/view?usp=share_link) on Open Images V6 with a single GPU (1 image per GPU):
+```
+python main.py --dataset oi --img_folder data/oi/images/ --ann_path data/oi/ --eval --batch_size 1 --resume ckpt/checkpoint0149_oi.pth
 ```
