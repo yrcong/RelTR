@@ -131,3 +131,7 @@ b) Evaluate the pretrained [RelTR](https://drive.google.com/file/d/1pcoUnR0XWsvM
 ```
 python main.py --dataset oi --img_folder data/oi/images/ --ann_path data/oi/ --eval --batch_size 1 --resume ckpt/checkpoint0149_oi.pth
 ```
+
+# 3. Questions
+Since the code is cleaned up from the draft, there may be some errors.
+If you meet any problem when running our code, please let me know! (It's better open an issue so that anyone can see it)
